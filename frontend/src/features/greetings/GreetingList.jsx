@@ -73,7 +73,7 @@ function GreetingList({
             <div className="flex shrink-0 flex-wrap gap-2">
               {greeting.status === 'active' && (
                 <button
-                  className="rounded-lg bg-stone-900 px-3 py-2 text-sm font-semibold text-white hover:bg-stone-800 disabled:cursor-wait disabled:opacity-60"
+                  className="rounded-lg bg-[#b95670] px-3 py-2 text-sm font-semibold text-white hover:bg-[#9f4860] disabled:cursor-wait disabled:opacity-60"
                   disabled={generatingQrId === greeting.id}
                   onClick={() => onOpenQr(greeting)}
                   type="button"

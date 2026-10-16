@@ -63,7 +63,7 @@ function LoginPage({ onLogin }) {
           )}
 
           <button
-            className="w-full rounded-xl bg-stone-900 px-4 py-3 font-semibold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-xl bg-[#b95670] px-4 py-3 font-semibold text-white shadow-lg shadow-rose-100 transition hover:bg-[#9f4860] disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isSubmitting}
             type="submit"
           >

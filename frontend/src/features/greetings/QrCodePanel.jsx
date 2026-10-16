@@ -109,7 +109,7 @@ function QrCodePanel({ greeting, onClose }) {
             Preview surprise
           </a>
           <a
-            className="rounded-xl bg-rose-500 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-rose-400 sm:col-span-2"
+            className="rounded-xl bg-[#b95670] px-4 py-3 text-center text-sm font-semibold text-white hover:bg-[#9f4860] sm:col-span-2"
             download={getDownloadName(greeting.recipientName)}
             href={qrImageUrl}
           >

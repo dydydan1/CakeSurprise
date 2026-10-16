@@ -150,8 +150,8 @@ function DashboardPage({ admin, onLogout }) {
   }
 
   return (
-    <main className="min-h-screen bg-stone-50 text-stone-900">
-      <header className="border-b border-stone-200 bg-white">
+    <main className="min-h-screen bg-[#fffaf7] text-stone-900">
+      <header className="border-b border-rose-100 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-600">
@@ -183,16 +183,17 @@ function DashboardPage({ admin, onLogout }) {
             onSave={handleSaveGreeting}
           />
         ) : (
-          <section className="flex flex-col gap-4 rounded-3xl bg-stone-900 p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
-            <div>
-              <p className="text-sm font-medium text-rose-300">Customer greetings</p>
+          <section className="relative flex flex-col gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-[#ffe8e8] via-[#fff6dc] to-[#e8e3ff] p-6 text-stone-900 ring-1 ring-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
+            <div className="absolute -right-12 -top-16 size-44 rounded-full bg-white/50 blur-2xl" aria-hidden="true" />
+            <div className="relative">
+              <p className="text-sm font-semibold text-[#b95670]">Customer greetings</p>
               <h2 className="mt-2 text-2xl font-semibold">Create a memorable cake surprise</h2>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-stone-300">
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-stone-600">
                 Create a greeting, activate it, then download a QR code for the cake card or packaging.
               </p>
             </div>
             <button
-              className="shrink-0 rounded-xl bg-rose-500 px-5 py-3 font-semibold text-white hover:bg-rose-400"
+              className="relative shrink-0 rounded-xl bg-[#b95670] px-5 py-3 font-semibold text-white shadow-lg shadow-rose-200/70 hover:bg-[#9f4860]"
               onClick={openNewGreetingForm}
               type="button"
             >
@@ -238,7 +239,7 @@ function DashboardPage({ admin, onLogout }) {
               ))}
             </select>
             <button
-              className="rounded-xl bg-stone-900 px-5 py-2.5 font-semibold text-white hover:bg-stone-800"
+              className="rounded-xl bg-[#b95670] px-5 py-2.5 font-semibold text-white hover:bg-[#9f4860]"
               type="submit"
             >
               Search

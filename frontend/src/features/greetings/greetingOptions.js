@@ -1,5 +1,6 @@
 export const occasionOptions = [
   { value: 'birthday', label: 'Birthday' },
+  { value: 'monthsary', label: 'Monthsary' },
   { value: 'anniversary', label: 'Anniversary' },
   { value: 'romantic', label: 'Romantic' },
   { value: 'valentines', label: "Valentine's Day" },
@@ -10,7 +11,11 @@ export const occasionOptions = [
 
 export const themeOptions = [
   { value: 'birthday', label: 'Birthday Joy' },
+  { value: 'monthsary', label: 'Monthsary Sweetness' },
+  { value: 'anniversary', label: 'Anniversary Elegance' },
   { value: 'romantic', label: 'Romantic' },
+  { value: 'valentines', label: "Valentine's Day" },
+  { value: 'graduation', label: 'Graduation Glow' },
   { value: 'elegant', label: 'Elegant' },
   { value: 'celebration', label: 'Celebration' }
 ]

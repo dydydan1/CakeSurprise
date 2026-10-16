@@ -15,6 +15,111 @@ body {
   box-sizing: border-box;
 }
 
+.surprise-page {
+  color: var(--theme-ink);
+  isolation: isolate;
+}
+
+.surprise-card {
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 2rem;
+  box-shadow:
+    0 30px 90px rgba(81, 58, 69, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(18px);
+}
+
+.surprise-title {
+  color: var(--theme-ink, #292524);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+}
+
+.surprise-signature {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+}
+
+.surprise-artwork {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 15px 40px rgba(75, 55, 67, 0.13);
+  color: var(--theme-primary);
+}
+
+.surprise-artwork svg {
+  height: 62%;
+  width: 62%;
+}
+
+.surprise-badge {
+  background: var(--theme-color-one);
+  color: var(--theme-primary);
+}
+
+.surprise-divider span {
+  background: var(--theme-primary);
+  height: 1px;
+  opacity: 0.55;
+  width: 2.5rem;
+}
+
+.surprise-divider strong {
+  color: var(--theme-primary);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.surprise-glow {
+  border-radius: 999px;
+  filter: blur(10px);
+  opacity: 0.7;
+  position: absolute;
+  z-index: -2;
+}
+
+.surprise-glow-one {
+  background: var(--theme-color-two);
+  height: 18rem;
+  left: -8rem;
+  top: -6rem;
+  width: 18rem;
+}
+
+.surprise-glow-two {
+  background: var(--theme-color-three);
+  bottom: -8rem;
+  height: 22rem;
+  right: -9rem;
+  width: 22rem;
+}
+
+.surprise-ribbon {
+  border: 2px solid var(--theme-primary);
+  border-radius: 50%;
+  opacity: 0.18;
+  position: absolute;
+  z-index: -1;
+}
+
+.surprise-ribbon-one {
+  height: 34rem;
+  left: -25rem;
+  top: 8%;
+  transform: rotate(24deg);
+  width: 50rem;
+}
+
+.surprise-ribbon-two {
+  bottom: -20rem;
+  height: 35rem;
+  right: -18rem;
+  transform: rotate(-18deg);
+  width: 42rem;
+}
+
 @keyframes surprise-arrive {
   from {
     opacity: 0;
@@ -58,6 +163,15 @@ body {
   }
 }
 
+@keyframes surprise-ribbon-drift {
+  0%, 100% {
+    transform: rotate(22deg) translateY(0);
+  }
+  50% {
+    transform: rotate(25deg) translateY(-12px);
+  }
+}
+
 .surprise-intro,
 .surprise-reveal {
   animation: surprise-arrive 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -69,6 +183,10 @@ body {
 
 .surprise-open-button {
   animation: surprise-pulse 2s ease-in-out infinite;
+}
+
+.surprise-ribbon-one {
+  animation: surprise-ribbon-drift 7s ease-in-out infinite;
 }
 
 .surprise-particle {
@@ -85,7 +203,8 @@ body {
   .surprise-reveal,
   .surprise-gift-icon,
   .surprise-open-button,
-  .surprise-particle {
+  .surprise-particle,
+  .surprise-ribbon-one {
     animation: none;
   }
 

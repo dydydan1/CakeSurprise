@@ -4,6 +4,10 @@ import {
   statusOptions,
   themeOptions
 } from './greetingOptions.js'
+import {
+  getOccasionVisual,
+  occasionThemeDefaults
+} from './occasionVisuals.js'
 
 const emptyGreeting = {
   recipientName: '',
@@ -39,7 +43,8 @@ function GreetingForm({ greeting, isSaving, onCancel, onSave }) {
     const { name, value } = event.target
     setFormValues((currentValues) => ({
       ...currentValues,
-      [name]: value
+      [name]: value,
+      ...(name === 'occasion' ? { theme: occasionThemeDefaults[value] } : {})
     }))
   }
 
@@ -49,6 +54,7 @@ function GreetingForm({ greeting, isSaving, onCancel, onSave }) {
   }
 
   const inputClassName = 'mt-2 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none transition focus:border-rose-500 focus:ring-4 focus:ring-rose-100'
+  const occasionVisual = getOccasionVisual(formValues.occasion)
 
   return (
     <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-stone-200 sm:p-8">
@@ -60,6 +66,29 @@ function GreetingForm({ greeting, isSaving, onCancel, onSave }) {
           <h2 className="mt-2 text-2xl font-semibold">
             {greeting ? `For ${greeting.recipientName}` : 'Create a customer greeting'}
           </h2>
+        </div>
+
+        <div
+          className="flex flex-col gap-4 rounded-2xl border border-white/80 p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+          style={{
+            background: `linear-gradient(120deg, ${occasionVisual.colors[0]}, ${occasionVisual.colors[2]})`
+          }}
+        >
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone-500">
+              Recipient palette
+            </p>
+            <p className="mt-1 font-semibold text-stone-800">{occasionVisual.label}</p>
+          </div>
+          <div className="flex gap-2" aria-label={`${occasionVisual.label} color palette`}>
+            {occasionVisual.colors.map((color) => (
+              <span
+                className="size-9 rounded-full border-2 border-white shadow-sm"
+                key={color}
+                style={{ backgroundColor: color }}
+              />
+            ))}
+          </div>
         </div>
         <button
           className="rounded-lg px-3 py-2 text-sm font-medium text-stone-500 hover:bg-stone-100"
@@ -174,7 +203,7 @@ function GreetingForm({ greeting, isSaving, onCancel, onSave }) {
             Cancel
           </button>
           <button
-            className="rounded-xl bg-stone-900 px-5 py-3 font-semibold text-white hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-xl bg-[#b95670] px-5 py-3 font-semibold text-white hover:bg-[#9f4860] disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isSaving}
             type="submit"
           >
