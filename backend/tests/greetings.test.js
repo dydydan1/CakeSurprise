@@ -59,15 +59,17 @@ test('greeting management lifecycle', async () => {
   ).send({
       recipientName: 'Sophia Test',
       senderName: 'James Test',
-      message: 'Happy anniversary! This is an integration test greeting.',
-      occasion: 'anniversary',
-      theme: 'elegant',
+      message: 'Happy monthsary! This is an integration test greeting.',
+      occasion: 'monthsary',
+      theme: 'monthsary',
       status: 'draft',
       orderReference: 'TEST-ORDER-001'
     })
 
   assert.equal(createResponse.status, 201)
   assert.equal(createResponse.body.greeting.status, 'draft')
+  assert.equal(createResponse.body.greeting.occasion, 'monthsary')
+  assert.equal(createResponse.body.greeting.theme, 'monthsary')
   greetingId = createResponse.body.greeting.id
 
   const listResponse = await agent

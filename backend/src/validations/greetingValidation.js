@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 export const greetingOccasions = [
   'birthday',
+  'monthsary',
   'anniversary',
   'romantic',
   'valentines',
@@ -12,7 +13,11 @@ export const greetingOccasions = [
 
 export const greetingThemes = [
   'birthday',
+  'monthsary',
+  'anniversary',
   'romantic',
+  'valentines',
+  'graduation',
   'elegant',
   'celebration'
 ]
