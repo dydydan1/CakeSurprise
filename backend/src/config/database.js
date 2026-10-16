@@ -7,6 +7,7 @@ export const database = mysql.createPool({
   database: env.dbName,
   user: env.dbUser,
   password: env.dbPassword,
+  timezone: 'Z',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

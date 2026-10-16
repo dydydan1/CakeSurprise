@@ -11,6 +11,11 @@ import {
 
 export const sessionCookieName = 'cake_admin_session'
 
+const dummyPasswordHashPromise = argon2.hash(
+  randomBytes(32).toString('base64url'),
+  { type: argon2.argon2id }
+)
+
 export const hashSessionToken = (token) => {
   return createHash('sha256').update(token).digest('hex')
 }
@@ -24,14 +29,10 @@ const sanitizeAdmin = (admin) => ({
 
 export const authenticateAdmin = async ({ email, password }) => {
   const admin = await findAdminByEmail(email)
+  const passwordHash = admin?.password_hash || await dummyPasswordHashPromise
+  const passwordMatches = await argon2.verify(passwordHash, password)
 
-  if (!admin || !admin.is_active) {
-    return null
-  }
-
-  const passwordMatches = await argon2.verify(admin.password_hash, password)
-
-  if (!passwordMatches) {
+  if (!admin || !admin.is_active || !passwordMatches) {
     return null
   }
 

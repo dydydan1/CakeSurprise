@@ -5,9 +5,14 @@ import argon2 from 'argon2'
 import request from 'supertest'
 import app from '../src/app.js'
 import { database } from '../src/config/database.js'
+import { env } from '../src/config/env.js'
 
 const testEmail = `auth-test-${randomUUID()}@example.com`
 const testPassword = `Test-${randomUUID()}-password`
+
+const setOrigin = (testRequest) => {
+  return testRequest.set('Origin', env.clientOrigin)
+}
 
 test.before(async () => {
   const passwordHash = await argon2.hash(testPassword, {
@@ -29,15 +34,15 @@ test.after(async () => {
 test('admin authentication lifecycle', async () => {
   const agent = request.agent(app)
 
-  const rejectedLogin = await agent
-    .post('/api/admin/auth/login')
-    .send({ email: testEmail, password: 'incorrect-password' })
+  const rejectedLogin = await setOrigin(
+    agent.post('/api/admin/auth/login')
+  ).send({ email: testEmail, password: 'incorrect-password' })
 
   assert.equal(rejectedLogin.status, 401)
 
-  const loginResponse = await agent
-    .post('/api/admin/auth/login')
-    .send({ email: testEmail, password: testPassword })
+  const loginResponse = await setOrigin(
+    agent.post('/api/admin/auth/login')
+  ).send({ email: testEmail, password: testPassword })
 
   assert.equal(loginResponse.status, 200)
   assert.equal(loginResponse.body.admin.email, testEmail)
@@ -48,7 +53,7 @@ test('admin authentication lifecycle', async () => {
   assert.equal(currentAdminResponse.status, 200)
   assert.equal(currentAdminResponse.body.admin.role, 'owner')
 
-  const logoutResponse = await agent.post('/api/admin/auth/logout')
+  const logoutResponse = await setOrigin(agent.post('/api/admin/auth/logout'))
   assert.equal(logoutResponse.status, 204)
 
   const signedOutResponse = await agent.get('/api/admin/auth/me')

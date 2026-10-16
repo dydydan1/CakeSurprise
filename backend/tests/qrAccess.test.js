@@ -5,11 +5,16 @@ import argon2 from 'argon2'
 import request from 'supertest'
 import app from '../src/app.js'
 import { database } from '../src/config/database.js'
+import { env } from '../src/config/env.js'
 import { deleteGreetingRecord } from '../src/models/greetingModel.js'
 
 const testEmail = `qr-test-${randomUUID()}@example.com`
 const testPassword = `Test-${randomUUID()}-password`
 let greetingId
+
+const setOrigin = (testRequest) => {
+  return testRequest.set('Origin', env.clientOrigin)
+}
 
 test.before(async () => {
   const passwordHash = await argon2.hash(testPassword, {
@@ -33,19 +38,20 @@ test.after(async () => {
 })
 
 test('QR access lifecycle', async () => {
-  const unauthorizedResponse = await request(app)
-    .post('/api/admin/greetings/1/qr')
+  const unauthorizedResponse = await setOrigin(
+    request(app).post('/api/admin/greetings/1/qr')
+  )
 
   assert.equal(unauthorizedResponse.status, 401)
 
   const agent = request.agent(app)
-  await agent
-    .post('/api/admin/auth/login')
-    .send({ email: testEmail, password: testPassword })
+  await setOrigin(
+    agent.post('/api/admin/auth/login')
+  ).send({ email: testEmail, password: testPassword })
 
-  const createResponse = await agent
-    .post('/api/admin/greetings')
-    .send({
+  const createResponse = await setOrigin(
+    agent.post('/api/admin/greetings')
+  ).send({
       recipientName: 'QR Recipient',
       senderName: 'QR Sender',
       message: 'Scan complete. Your cake surprise is here!',
@@ -58,24 +64,27 @@ test('QR access lifecycle', async () => {
   assert.equal(createResponse.status, 201)
   greetingId = createResponse.body.greeting.id
 
-  const inactiveQrResponse = await agent
-    .post(`/api/admin/greetings/${greetingId}/qr`)
+  const inactiveQrResponse = await setOrigin(
+    agent.post(`/api/admin/greetings/${greetingId}/qr`)
+  )
 
   assert.equal(inactiveQrResponse.status, 409)
 
-  await agent
-    .patch(`/api/admin/greetings/${greetingId}`)
-    .send({ status: 'active' })
+  await setOrigin(
+    agent.patch(`/api/admin/greetings/${greetingId}`)
+  ).send({ status: 'active' })
 
-  const qrResponse = await agent
-    .post(`/api/admin/greetings/${greetingId}/qr`)
+  const qrResponse = await setOrigin(
+    agent.post(`/api/admin/greetings/${greetingId}/qr`)
+  )
 
   assert.equal(qrResponse.status, 200)
   assert.match(qrResponse.body.greeting.publicToken, /^[A-Za-z0-9_-]{43}$/)
   assert.ok(qrResponse.body.greeting.qrGeneratedAt)
 
-  const repeatedQrResponse = await agent
-    .post(`/api/admin/greetings/${greetingId}/qr`)
+  const repeatedQrResponse = await setOrigin(
+    agent.post(`/api/admin/greetings/${greetingId}/qr`)
+  )
 
   assert.equal(
     repeatedQrResponse.body.greeting.publicToken,
@@ -91,9 +100,9 @@ test('QR access lifecycle', async () => {
   assert.equal(publicResponse.body.greeting.orderReference, undefined)
   assert.equal(publicResponse.body.greeting.publicToken, undefined)
 
-  await agent
-    .patch(`/api/admin/greetings/${greetingId}`)
-    .send({ status: 'disabled' })
+  await setOrigin(
+    agent.patch(`/api/admin/greetings/${greetingId}`)
+  ).send({ status: 'disabled' })
 
   const disabledPublicResponse = await request(app)
     .get(`/api/public/greetings/${qrResponse.body.greeting.publicToken}`)
