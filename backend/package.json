@@ -8,7 +8,9 @@
     "start": "node src/server.js",
     "migrate": "node scripts/migrate.js",
     "seed:admin": "node scripts/seedAdmin.js",
-    "test:auth": "node --test tests/auth.test.js"
+    "test:auth": "node --test tests/auth.test.js",
+    "test:greetings": "node --test tests/greetings.test.js",
+    "test:qr": "node --test tests/qrAccess.test.js"
   },
   "dependencies": {
     "argon2": "^0.45.1",

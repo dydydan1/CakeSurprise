@@ -3,7 +3,9 @@ import cookieParser from 'cookie-parser'
 import express from 'express'
 import { env } from './config/env.js'
 import authRoutes from './routes/authRoutes.js'
+import greetingRoutes from './routes/greetingRoutes.js'
 import healthRoutes from './routes/healthRoutes.js'
+import publicGreetingRoutes from './routes/publicGreetingRoutes.js'
 
 const app = express()
 
@@ -15,7 +17,9 @@ app.use(express.json({ limit: '100kb' }))
 app.use(cookieParser())
 
 app.use('/api/health', healthRoutes)
+app.use('/api/public/greetings', publicGreetingRoutes)
 app.use('/api/admin/auth', authRoutes)
+app.use('/api/admin/greetings', greetingRoutes)
 
 app.use((_request, response) => {
   return response.status(404).json({
