@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import BrandLockup from '../components/BrandLockup.jsx'
 
 function LoginPage({ onLogin }) {
   const [email, setEmail] = useState('')
@@ -23,9 +24,7 @@ function LoginPage({ onLogin }) {
   return (
     <main className="grid min-h-screen place-items-center bg-[radial-gradient(circle_at_top,_#fff1f2,_#fafaf9_45%)] px-6 py-12 text-stone-900">
       <section className="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl shadow-rose-100/60 ring-1 ring-stone-200 sm:p-10">
-        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-rose-600">
-          Cake QR Surprise
-        </p>
+        <BrandLockup showTagline />
         <h1 className="mt-3 text-3xl font-semibold tracking-tight">Welcome back</h1>
         <p className="mt-3 text-sm leading-6 text-stone-600">
           Sign in to manage your customer greeting experiences.

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import BrandLockup from '../components/BrandLockup.jsx'
 import GreetingForm from '../features/greetings/GreetingForm.jsx'
 import GreetingList from '../features/greetings/GreetingList.jsx'
 import QrCodePanel from '../features/greetings/QrCodePanel.jsx'
@@ -154,10 +155,8 @@ function DashboardPage({ admin, onLogout }) {
       <header className="border-b border-rose-100 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-600">
-              Cake QR Surprise
-            </p>
-            <h1 className="mt-1 text-xl font-semibold">Greeting manager</h1>
+            <BrandLockup showTagline />
+            <h1 className="sr-only">Greeting manager</h1>
           </div>
           <div className="flex items-center gap-3">
             <p className="hidden text-right text-sm text-stone-500 sm:block">

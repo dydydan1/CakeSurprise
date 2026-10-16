@@ -113,7 +113,7 @@ function SurprisePage() {
           </button>
 
           <p className="mt-6 text-[0.65rem] font-bold uppercase tracking-[0.24em] text-stone-400">
-            Cake QR Surprise
+            Frosted Whispers
           </p>
         </section>
       ) : (
@@ -170,7 +170,7 @@ function SurprisePage() {
             )}
 
             <p className="mt-8 text-[0.65rem] font-bold uppercase tracking-[0.24em] text-stone-400">
-              Cake QR Surprise
+              Frosted Whispers
             </p>
           </article>
         </>
