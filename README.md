@@ -1,4 +1,6 @@
-# Cake QR Code Surprise Message System
+# Frosted Whispers
+
+Every cake carries a message.
 
 ## Feature 1: Project foundation
 
