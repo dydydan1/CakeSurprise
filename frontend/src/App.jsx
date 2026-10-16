@@ -4,6 +4,7 @@ import LoadingScreen from './components/LoadingScreen.jsx'
 import { getCurrentAdmin, loginAdmin, logoutAdmin } from './lib/api.js'
 import DashboardPage from './pages/DashboardPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import SurprisePage from './pages/SurprisePage.jsx'
 
 function App() {
   const [admin, setAdmin] = useState(null)
@@ -43,6 +44,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/surprise/:token" element={<SurprisePage />} />
       <Route
         path="/login"
         element={admin ? <Navigate replace to="/dashboard" /> : <LoginPage onLogin={handleLogin} />}

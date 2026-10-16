@@ -39,3 +39,40 @@ export const logoutAdmin = () => {
     method: 'POST'
   })
 }
+
+export const listGreetings = (filters = {}) => {
+  const query = new URLSearchParams()
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== '' && value !== undefined && value !== null) {
+      query.set(key, value)
+    }
+  })
+
+  const queryString = query.toString()
+  return apiRequest(`/admin/greetings${queryString ? `?${queryString}` : ''}`)
+}
+
+export const createGreeting = (greeting) => {
+  return apiRequest('/admin/greetings', {
+    method: 'POST',
+    body: JSON.stringify(greeting)
+  })
+}
+
+export const updateGreeting = (id, updates) => {
+  return apiRequest(`/admin/greetings/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(updates)
+  })
+}
+
+export const generateGreetingQr = (id) => {
+  return apiRequest(`/admin/greetings/${id}/qr`, {
+    method: 'POST'
+  })
+}
+
+export const getPublicGreeting = (publicToken) => {
+  return apiRequest(`/public/greetings/${publicToken}`)
+}

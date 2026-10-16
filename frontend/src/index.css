@@ -14,3 +14,82 @@ body {
 * {
   box-sizing: border-box;
 }
+
+@keyframes surprise-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes surprise-float {
+  0%, 100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+@keyframes surprise-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes surprise-particle-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(25vh) scale(0.7) rotate(0deg);
+  }
+  25% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-45vh) scale(1.25) rotate(90deg);
+  }
+}
+
+.surprise-intro,
+.surprise-reveal {
+  animation: surprise-arrive 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.surprise-gift-icon {
+  animation: surprise-float 2.8s ease-in-out infinite;
+}
+
+.surprise-open-button {
+  animation: surprise-pulse 2s ease-in-out infinite;
+}
+
+.surprise-particle {
+  animation: surprise-particle-rise 2.8s ease-out both;
+  animation-delay: var(--particle-delay);
+  bottom: 0;
+  font-size: 1.75rem;
+  left: var(--particle-left);
+  position: absolute;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surprise-intro,
+  .surprise-reveal,
+  .surprise-gift-icon,
+  .surprise-open-button,
+  .surprise-particle {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
