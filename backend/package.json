@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=20.19 <25"
+  },
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
@@ -11,7 +14,8 @@
     "test:auth": "node --test tests/auth.test.js",
     "test:greetings": "node --test tests/greetings.test.js",
     "test:qr": "node --test tests/qrAccess.test.js",
-    "test:security": "node --test tests/security.test.js"
+    "test:security": "node --test tests/security.test.js",
+    "test:env": "node --test tests/env.test.js"
   },
   "dependencies": {
     "argon2": "^0.45.1",
