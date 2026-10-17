@@ -7,6 +7,7 @@ import { occasionOptions, statusOptions } from '../features/greetings/greetingOp
 import {
   createGreeting,
   generateGreetingQr,
+  isUnauthorizedError,
   listGreetings,
   updateGreeting
 } from '../lib/api.js'
@@ -19,7 +20,7 @@ const initialFilters = {
   limit: 10
 }
 
-function DashboardPage({ admin, onLogout }) {
+function DashboardPage({ admin, onLogout, onSessionExpired }) {
   const [greetings, setGreetings] = useState([])
   const [pagination, setPagination] = useState({
     page: 1,
@@ -36,6 +37,15 @@ function DashboardPage({ admin, onLogout }) {
   const [generatingQrId, setGeneratingQrId] = useState(null)
   const [qrGreeting, setQrGreeting] = useState(null)
 
+  const handleRequestError = useCallback((error) => {
+    if (isUnauthorizedError(error)) {
+      onSessionExpired()
+      return
+    }
+
+    setErrorMessage(error.message)
+  }, [onSessionExpired])
+
   const loadGreetings = useCallback(async () => {
     setIsLoading(true)
     setErrorMessage('')
@@ -45,11 +55,11 @@ function DashboardPage({ admin, onLogout }) {
       setGreetings(data.greetings)
       setPagination(data.pagination)
     } catch (error) {
-      setErrorMessage(error.message)
+      handleRequestError(error)
     } finally {
       setIsLoading(false)
     }
-  }, [filters])
+  }, [filters, handleRequestError])
 
   useEffect(() => {
     loadGreetings()
@@ -105,7 +115,7 @@ function DashboardPage({ admin, onLogout }) {
       closeGreetingForm()
       await loadGreetings()
     } catch (error) {
-      setErrorMessage(error.message)
+      handleRequestError(error)
     } finally {
       setIsSaving(false)
     }
@@ -118,7 +128,7 @@ function DashboardPage({ admin, onLogout }) {
       await updateGreeting(greeting.id, { status })
       await loadGreetings()
     } catch (error) {
-      setErrorMessage(error.message)
+      handleRequestError(error)
     }
   }
 
@@ -137,7 +147,7 @@ function DashboardPage({ admin, onLogout }) {
 
       setQrGreeting(selectedGreeting)
     } catch (error) {
-      setErrorMessage(error.message)
+      handleRequestError(error)
     } finally {
       setGeneratingQrId(null)
     }

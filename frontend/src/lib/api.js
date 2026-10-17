@@ -1,5 +1,17 @@
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
 
+export class ApiError extends Error {
+  constructor(message, status) {
+    super(message)
+    this.name = 'ApiError'
+    this.status = status
+  }
+}
+
+export const isUnauthorizedError = (error) => {
+  return error instanceof ApiError && error.status === 401
+}
+
 const apiRequest = async (path, options = {}) => {
   const response = await fetch(`${apiBaseUrl}${path}`, {
     ...options,
@@ -14,10 +26,10 @@ const apiRequest = async (path, options = {}) => {
     return null
   }
 
-  const data = await response.json()
+  const data = await response.json().catch(() => ({}))
 
   if (!response.ok) {
-    throw new Error(data.message || 'Request failed')
+    throw new ApiError(data.message || 'Request failed', response.status)
   }
 
   return data

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import LoadingScreen from './components/LoadingScreen.jsx'
 import { getCurrentAdmin, loginAdmin, logoutAdmin } from './lib/api.js'
@@ -33,10 +33,18 @@ function App() {
   }
 
   const handleLogout = async () => {
-    await logoutAdmin()
+    try {
+      await logoutAdmin()
+    } finally {
+      setAdmin(null)
+      navigate('/login', { replace: true })
+    }
+  }
+
+  const handleSessionExpired = useCallback(() => {
     setAdmin(null)
     navigate('/login', { replace: true })
-  }
+  }, [navigate])
 
   if (isLoading) {
     return <LoadingScreen />
@@ -53,7 +61,13 @@ function App() {
         path="/dashboard"
         element={
           admin
-            ? <DashboardPage admin={admin} onLogout={handleLogout} />
+            ? (
+              <DashboardPage
+                admin={admin}
+                onLogout={handleLogout}
+                onSessionExpired={handleSessionExpired}
+              />
+            )
             : <Navigate replace to="/login" />
         }
       />
