@@ -20,12 +20,34 @@ const sendValidationError = (response) => {
   })
 }
 
+const sendOwnerAccessRequired = (response) => {
+  return response.status(403).json({
+    message: 'Owner access is required to archive or restore greetings'
+  })
+}
+
+const isRestrictedArchiveChange = (adminRole, currentStatus, nextStatus) => {
+  if (adminRole === 'owner' || !nextStatus || nextStatus === currentStatus) {
+    return false
+  }
+
+  return currentStatus === 'archived' || nextStatus === 'archived'
+}
+
 export const createGreetingHandler = async (request, response, next) => {
   try {
     const validationResult = createGreetingSchema.safeParse(request.body)
 
     if (!validationResult.success) {
       return sendValidationError(response)
+    }
+
+    if (isRestrictedArchiveChange(
+      request.admin.role,
+      null,
+      validationResult.data.status
+    )) {
+      return sendOwnerAccessRequired(response)
     }
 
     const greeting = await createGreeting(validationResult.data, request.admin.id)
@@ -79,6 +101,22 @@ export const updateGreetingHandler = async (request, response, next) => {
 
     if (!idResult.success || !validationResult.success) {
       return sendValidationError(response)
+    }
+
+    const existingGreeting = await getGreeting(idResult.data)
+
+    if (!existingGreeting) {
+      return response.status(404).json({
+        message: 'Greeting not found'
+      })
+    }
+
+    if (isRestrictedArchiveChange(
+      request.admin.role,
+      existingGreeting.status,
+      validationResult.data.status
+    )) {
+      return sendOwnerAccessRequired(response)
     }
 
     const greeting = await updateGreeting(idResult.data, validationResult.data)

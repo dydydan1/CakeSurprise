@@ -10,7 +10,10 @@ import { deleteGreetingRecord } from '../src/models/greetingModel.js'
 
 const testEmail = `greeting-test-${randomUUID()}@example.com`
 const testPassword = `Test-${randomUUID()}-password`
+const staffEmail = `greeting-staff-${randomUUID()}@example.com`
+const staffPassword = `Test-${randomUUID()}-password`
 let greetingId
+let staffGreetingId
 
 const setOrigin = (testRequest) => {
   return testRequest.set('Origin', env.clientOrigin)
@@ -26,6 +29,16 @@ test.before(async () => {
      VALUES (?, ?, 'Greeting Test', 'owner')`,
     [testEmail, passwordHash]
   )
+
+  const staffPasswordHash = await argon2.hash(staffPassword, {
+    type: argon2.argon2id
+  })
+
+  await database.execute(
+    `INSERT INTO admins (email, password_hash, display_name, role)
+     VALUES (?, ?, 'Greeting Staff Test', 'staff')`,
+    [staffEmail, staffPasswordHash]
+  )
 })
 
 test.after(async () => {
@@ -33,7 +46,14 @@ test.after(async () => {
     await deleteGreetingRecord(greetingId)
   }
 
-  await database.execute('DELETE FROM admins WHERE email = ?', [testEmail])
+  if (staffGreetingId) {
+    await deleteGreetingRecord(staffGreetingId)
+  }
+
+  await database.execute(
+    'DELETE FROM admins WHERE email IN (?, ?)',
+    [testEmail, staffEmail]
+  )
   await database.end()
 })
 
@@ -91,4 +111,62 @@ test('greeting management lifecycle', async () => {
   assert.equal(updateResponse.status, 200)
   assert.equal(updateResponse.body.greeting.status, 'archived')
   assert.ok(updateResponse.body.greeting.archivedAt)
+
+  const staffAgent = request.agent(app)
+  const staffLoginResponse = await setOrigin(
+    staffAgent.post('/api/admin/auth/login')
+  ).send({ email: staffEmail, password: staffPassword })
+
+  assert.equal(staffLoginResponse.status, 200)
+  assert.equal(staffLoginResponse.body.admin.role, 'staff')
+
+  const archivedCreateResponse = await setOrigin(
+    staffAgent.post('/api/admin/greetings')
+  ).send({
+    recipientName: 'Restricted Archive',
+    message: 'Staff should not create an archived greeting.',
+    occasion: 'other',
+    theme: 'elegant',
+    status: 'archived'
+  })
+
+  assert.equal(archivedCreateResponse.status, 403)
+
+  const staffCreateResponse = await setOrigin(
+    staffAgent.post('/api/admin/greetings')
+  ).send({
+    recipientName: 'Staff Greeting',
+    message: 'Staff can create and manage active greetings.',
+    occasion: 'celebration',
+    theme: 'celebration',
+    status: 'draft'
+  })
+
+  assert.equal(staffCreateResponse.status, 201)
+  staffGreetingId = staffCreateResponse.body.greeting.id
+
+  const staffActivateResponse = await setOrigin(
+    staffAgent.patch(`/api/admin/greetings/${staffGreetingId}`)
+  ).send({ status: 'active' })
+
+  assert.equal(staffActivateResponse.status, 200)
+
+  const staffArchiveResponse = await setOrigin(
+    staffAgent.patch(`/api/admin/greetings/${staffGreetingId}`)
+  ).send({ status: 'archived' })
+
+  assert.equal(staffArchiveResponse.status, 403)
+
+  const staffRestoreResponse = await setOrigin(
+    staffAgent.patch(`/api/admin/greetings/${greetingId}`)
+  ).send({ status: 'draft' })
+
+  assert.equal(staffRestoreResponse.status, 403)
+
+  const staffEditArchivedResponse = await setOrigin(
+    staffAgent.patch(`/api/admin/greetings/${greetingId}`)
+  ).send({ message: 'Staff can update copy without restoring the greeting.' })
+
+  assert.equal(staffEditArchivedResponse.status, 200)
+  assert.equal(staffEditArchivedResponse.body.greeting.status, 'archived')
 })

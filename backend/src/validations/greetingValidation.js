@@ -44,6 +44,9 @@ export const createGreetingSchema = z.object({
 
 export const updateGreetingSchema = createGreetingSchema
   .partial()
+  .extend({
+    status: z.enum(greetingStatuses).optional()
+  })
   .refine((value) => Object.keys(value).length > 0, {
     message: 'At least one greeting field is required'
   })
