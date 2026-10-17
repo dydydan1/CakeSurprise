@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import FormattedMessage from '../features/greetings/FormattedMessage.jsx'
 import OccasionArtwork from '../features/greetings/OccasionArtwork.jsx'
 import { getGreetingVisual } from '../features/greetings/occasionVisuals.js'
 import { getPublicGreeting } from '../lib/api.js'
@@ -178,9 +179,7 @@ function SurprisePage() {
             </header>
 
             <section className="surprise-letter-body mt-7" aria-label="Your surprise message">
-              <p className="surprise-message whitespace-pre-wrap text-lg leading-9 sm:text-xl sm:leading-10">
-                {greeting.message}
-              </p>
+              <FormattedMessage message={greeting.message} />
             </section>
 
             <footer className="surprise-letter-footer mt-9">

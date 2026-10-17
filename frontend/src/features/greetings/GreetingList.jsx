@@ -4,6 +4,7 @@ import {
   statusOptions,
   themeOptions
 } from './greetingOptions.js'
+import { toPlainMessagePreview } from './messageFormatting.js'
 
 const statusStyles = {
   draft: 'bg-stone-100 text-stone-700',
@@ -60,7 +61,7 @@ function GreetingList({
                 </span>
               </div>
               <p className="mt-2 line-clamp-2 text-sm leading-6 text-stone-600">
-                {greeting.message}
+                {toPlainMessagePreview(greeting.message)}
               </p>
               <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-stone-500">
                 <span>{getOptionLabel(occasionOptions, greeting.occasion)}</span>
