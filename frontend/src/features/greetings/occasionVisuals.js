@@ -101,6 +101,14 @@ export const getOccasionVisual = (occasion) => {
   return occasionVisuals[occasion] || occasionVisuals.other
 }
 
+export const getGreetingVisual = (greeting) => {
+  const visualKey = greeting?.theme === 'elegant'
+    ? greeting?.occasion
+    : greeting?.theme
+
+  return getOccasionVisual(visualKey)
+}
+
 export const occasionThemeDefaults = {
   birthday: 'birthday',
   monthsary: 'monthsary',
