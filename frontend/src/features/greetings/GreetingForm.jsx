@@ -19,7 +19,19 @@ const emptyGreeting = {
   orderReference: ''
 }
 
-function GreetingForm({ greeting, isSaving, onCancel, onSave }) {
+const getAvailableStatusOptions = (canArchive, currentStatus) => {
+  if (canArchive) {
+    return statusOptions
+  }
+
+  if (currentStatus === 'archived') {
+    return statusOptions.filter((option) => option.value === 'archived')
+  }
+
+  return statusOptions.filter((option) => option.value !== 'archived')
+}
+
+function GreetingForm({ canArchive, greeting, isSaving, onCancel, onSave }) {
   const [formValues, setFormValues] = useState(emptyGreeting)
 
   useEffect(() => {
@@ -55,6 +67,10 @@ function GreetingForm({ greeting, isSaving, onCancel, onSave }) {
 
   const inputClassName = 'mt-2 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none transition focus:border-rose-500 focus:ring-4 focus:ring-rose-100'
   const occasionVisual = getOccasionVisual(formValues.occasion)
+  const availableStatusOptions = getAvailableStatusOptions(
+    canArchive,
+    formValues.status
+  )
 
   return (
     <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-stone-200 sm:p-8">
@@ -160,7 +176,7 @@ function GreetingForm({ greeting, isSaving, onCancel, onSave }) {
               onChange={updateField}
               value={formValues.status}
             >
-              {statusOptions.map((option) => (
+              {availableStatusOptions.map((option) => (
                 <option key={option.value} value={option.value}>{option.label}</option>
               ))}
             </select>

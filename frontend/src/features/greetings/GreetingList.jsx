@@ -19,6 +19,7 @@ const formatDate = (value) => {
 }
 
 function GreetingList({
+  canArchive,
   generatingQrId,
   greetings,
   isLoading,
@@ -105,16 +106,18 @@ function GreetingList({
                 </button>
               )}
 
-              <button
-                className="rounded-lg border border-stone-300 px-3 py-2 text-sm font-medium hover:bg-stone-50"
-                onClick={() => onStatusChange(
-                  greeting,
-                  greeting.status === 'archived' ? 'draft' : 'archived'
-                )}
-                type="button"
-              >
-                {greeting.status === 'archived' ? 'Restore' : 'Archive'}
-              </button>
+              {canArchive && (
+                <button
+                  className="rounded-lg border border-stone-300 px-3 py-2 text-sm font-medium hover:bg-stone-50"
+                  onClick={() => onStatusChange(
+                    greeting,
+                    greeting.status === 'archived' ? 'draft' : 'archived'
+                  )}
+                  type="button"
+                >
+                  {greeting.status === 'archived' ? 'Restore' : 'Archive'}
+                </button>
+              )}
             </div>
           </div>
         </article>

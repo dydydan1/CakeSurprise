@@ -21,6 +21,7 @@ const initialFilters = {
 }
 
 function DashboardPage({ admin, onLogout, onSessionExpired }) {
+  const canArchive = admin.role === 'owner'
   const [greetings, setGreetings] = useState([])
   const [pagination, setPagination] = useState({
     page: 1,
@@ -186,6 +187,7 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
       <div className="mx-auto max-w-6xl space-y-7 px-6 py-8 sm:py-10">
         {isFormOpen ? (
           <GreetingForm
+            canArchive={canArchive}
             greeting={editingGreeting}
             isSaving={isSaving}
             onCancel={closeGreetingForm}
@@ -266,6 +268,7 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
         </div>
 
         <GreetingList
+          canArchive={canArchive}
           generatingQrId={generatingQrId}
           greetings={greetings}
           isLoading={isLoading}
