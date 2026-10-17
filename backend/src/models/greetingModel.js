@@ -162,6 +162,23 @@ export const updateGreetingRecord = async (id, updates) => {
   )
 }
 
+export const setGreetingQrAccessIfMissing = async (
+  id,
+  publicToken,
+  qrGeneratedAt
+) => {
+  const [result] = await database.execute(
+    `UPDATE greetings
+     SET public_token = ?, qr_generated_at = ?
+     WHERE id = ?
+       AND status = 'active'
+       AND public_token IS NULL`,
+    [publicToken, qrGeneratedAt, id]
+  )
+
+  return result.affectedRows === 1
+}
+
 export const deleteGreetingRecord = async (id) => {
   await database.execute('DELETE FROM greetings WHERE id = ?', [id])
 }

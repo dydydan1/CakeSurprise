@@ -4,6 +4,7 @@ import {
   findActiveGreetingByPublicToken,
   findGreetingById,
   listGreetingRecords,
+  setGreetingQrAccessIfMissing,
   updateGreetingRecord
 } from '../models/greetingModel.js'
 
@@ -130,13 +131,25 @@ export const generateGreetingQrAccess = async (id) => {
   }
 
   if (!greeting.public_token) {
-    await updateGreetingRecord(id, {
-      publicToken: randomBytes(32).toString('base64url'),
-      qrGeneratedAt: new Date()
-    })
+    await setGreetingQrAccessIfMissing(
+      id,
+      randomBytes(32).toString('base64url'),
+      new Date()
+    )
   }
 
   const updatedGreeting = await findGreetingById(id)
+
+  if (!updatedGreeting) {
+    return { greeting: null, reason: 'not_found' }
+  }
+
+  if (updatedGreeting.status !== 'active') {
+    return {
+      greeting: formatGreeting(updatedGreeting),
+      reason: 'not_active'
+    }
+  }
 
   return {
     greeting: formatGreeting(updatedGreeting),

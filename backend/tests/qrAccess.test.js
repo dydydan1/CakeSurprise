@@ -74,22 +74,28 @@ test('QR access lifecycle', async () => {
     agent.patch(`/api/admin/greetings/${greetingId}`)
   ).send({ status: 'active' })
 
-  const qrResponse = await setOrigin(
-    agent.post(`/api/admin/greetings/${greetingId}/qr`)
+  const qrResponses = await Promise.all(
+    Array.from({ length: 8 }, () => setOrigin(
+      agent.post(`/api/admin/greetings/${greetingId}/qr`)
+    ))
   )
 
-  assert.equal(qrResponse.status, 200)
+  qrResponses.forEach((response) => {
+    assert.equal(response.status, 200)
+  })
+
+  const qrTokens = new Set(
+    qrResponses.map((response) => response.body.greeting.publicToken)
+  )
+  const qrGeneratedDates = new Set(
+    qrResponses.map((response) => response.body.greeting.qrGeneratedAt)
+  )
+  const qrResponse = qrResponses[0]
+
+  assert.equal(qrTokens.size, 1)
+  assert.equal(qrGeneratedDates.size, 1)
   assert.match(qrResponse.body.greeting.publicToken, /^[A-Za-z0-9_-]{43}$/)
   assert.ok(qrResponse.body.greeting.qrGeneratedAt)
-
-  const repeatedQrResponse = await setOrigin(
-    agent.post(`/api/admin/greetings/${greetingId}/qr`)
-  )
-
-  assert.equal(
-    repeatedQrResponse.body.greeting.publicToken,
-    qrResponse.body.greeting.publicToken
-  )
 
   const publicResponse = await request(app)
     .get(`/api/public/greetings/${qrResponse.body.greeting.publicToken}`)
