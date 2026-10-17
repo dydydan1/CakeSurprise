@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test:message-format": "node --test tests/messageFormatting.test.js"
+    "test:message-format": "node --test tests/messageFormatting.test.js",
+    "test:qr-download": "node --test tests/qrDownloadName.test.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",

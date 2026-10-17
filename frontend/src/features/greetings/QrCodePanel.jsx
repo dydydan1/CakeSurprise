@@ -2,15 +2,7 @@ import { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
 import { getGreetingVisual } from './occasionVisuals.js'
 import { createThemedQrCard } from './qrCardRenderer.js'
-
-const getDownloadName = (greeting, type) => {
-  const safeName = greeting.recipientName
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-
-  return `frosted-whispers-${greeting.occasion}-${safeName || 'greeting'}-${type}.png`
-}
+import { getQrDownloadName } from './qrDownloadName.js'
 
 function QrCodePanel({ greeting, onClose }) {
   const [qrImageUrl, setQrImageUrl] = useState('')
@@ -139,7 +131,7 @@ function QrCodePanel({ greeting, onClose }) {
           {qrImageUrl && (
             <a
               className="rounded-xl border border-stone-300 px-4 py-3 text-center text-sm font-semibold hover:bg-stone-50"
-              download={getDownloadName(greeting, 'qr-only')}
+              download={getQrDownloadName(greeting, 'qr-only')}
               href={qrImageUrl}
             >
               Download QR only
@@ -148,7 +140,7 @@ function QrCodePanel({ greeting, onClose }) {
           {qrCardUrl && (
             <a
               className="rounded-xl px-4 py-3 text-center text-sm font-semibold text-white shadow-sm sm:col-span-2"
-              download={getDownloadName(greeting, 'print-card')}
+              download={getQrDownloadName(greeting, 'print-card')}
               href={qrCardUrl}
               style={{ backgroundColor: visual.primary }}
             >
