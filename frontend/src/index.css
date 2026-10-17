@@ -38,8 +38,67 @@ body {
 }
 
 .surprise-signature {
-  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--theme-ink);
+  font-family: 'Segoe Print', 'Bradley Hand', 'Snell Roundhand', cursive;
   font-style: italic;
+}
+
+.surprise-letter {
+  background:
+    radial-gradient(circle at 12% 10%, color-mix(in srgb, var(--theme-color-one) 58%, transparent) 0 0.32rem, transparent 0.38rem),
+    radial-gradient(circle at 88% 28%, color-mix(in srgb, var(--theme-color-two) 38%, transparent) 0 0.24rem, transparent 0.3rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.94), color-mix(in srgb, var(--theme-color-three) 42%, white));
+  border-color: color-mix(in srgb, var(--theme-primary) 22%, white);
+  border-radius: 2.25rem;
+  box-shadow:
+    0 32px 90px rgba(81, 58, 69, 0.2),
+    inset 0 0 0 0.35rem rgba(255, 255, 255, 0.38);
+  color: var(--theme-ink);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.surprise-letter::before {
+  border: 1px dashed color-mix(in srgb, var(--theme-primary) 32%, transparent);
+  border-radius: 1.65rem;
+  content: '';
+  inset: 0.85rem;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.surprise-letter::after {
+  background: linear-gradient(120deg, transparent 12%, color-mix(in srgb, var(--theme-color-one) 48%, transparent) 12% 15%, transparent 15% 84%, color-mix(in srgb, var(--theme-color-two) 35%, transparent) 84% 87%, transparent 87%);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -2;
+}
+
+.surprise-salutation,
+.surprise-sender {
+  color: var(--theme-ink);
+  font-family: 'Segoe Print', 'Bradley Hand', 'Snell Roundhand', cursive;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.surprise-letter-body {
+  border-top: 1px solid color-mix(in srgb, var(--theme-primary) 18%, transparent);
+  padding-top: 1.75rem;
+}
+
+.surprise-message {
+  color: color-mix(in srgb, var(--theme-ink) 90%, #57534e);
+  font-family: 'Segoe Print', 'Bradley Hand', 'Snell Roundhand', Georgia, serif;
+  letter-spacing: 0.005em;
+}
+
+.surprise-letter-footer {
+  color: var(--theme-ink);
 }
 
 .surprise-artwork {

@@ -13,6 +13,24 @@ const getThemeStyle = (visual) => ({
   background: `linear-gradient(145deg, ${visual.colors[0]} 0%, #ffffff 48%, ${visual.colors[2]} 100%)`
 })
 
+const formatRevealDate = (dateValue) => {
+  if (!dateValue) {
+    return ''
+  }
+
+  const date = new Date(dateValue)
+
+  if (Number.isNaN(date.getTime())) {
+    return ''
+  }
+
+  return new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(date)
+}
+
 function SurprisePage() {
   const { token } = useParams()
   const [greeting, setGreeting] = useState(null)
@@ -34,6 +52,14 @@ function SurprisePage() {
 
     loadGreeting()
   }, [token])
+
+  useEffect(() => {
+    if (!isRevealed) {
+      return
+    }
+
+    window.scrollTo(0, 0)
+  }, [isRevealed])
 
   if (isLoading) {
     return (
@@ -64,7 +90,9 @@ function SurprisePage() {
 
   return (
     <main
-      className="surprise-page relative flex min-h-[100svh] items-center justify-center overflow-hidden p-4 text-center sm:p-8"
+      className={`surprise-page relative flex min-h-[100svh] justify-center overflow-x-clip p-4 text-center sm:p-8 ${
+        isRevealed ? 'items-start' : 'items-center'
+      }`}
       style={getThemeStyle(visual)}
     >
       <div className="surprise-glow surprise-glow-one" aria-hidden="true" />
@@ -132,43 +160,56 @@ function SurprisePage() {
           </div>
 
           <article
-            className="surprise-card surprise-reveal relative w-full max-w-xl px-6 py-8 sm:px-12 sm:py-11"
+            className="surprise-card surprise-letter surprise-reveal relative my-4 w-full max-w-2xl px-7 py-9 text-left sm:px-14 sm:py-12"
             aria-live="polite"
           >
-            <div className="surprise-artwork mx-auto flex size-20 items-center justify-center rounded-full sm:size-24">
-              <OccasionArtwork icon={visual.icon} />
-            </div>
+            <header className="surprise-letter-header text-center">
+              <div className="surprise-artwork mx-auto flex size-16 items-center justify-center rounded-full sm:size-20">
+                <OccasionArtwork icon={visual.icon} />
+              </div>
 
-            <p className="surprise-badge mx-auto mt-5 inline-flex rounded-full px-4 py-2 text-[0.68rem] font-bold uppercase tracking-[0.2em]">
-              {visual.label}
-            </p>
-
-            <p className="mt-7 text-xs font-bold uppercase tracking-[0.18em] text-stone-400">
-              Especially for
-            </p>
-            <h1 className="surprise-title mt-2 text-5xl leading-none sm:text-6xl">
-              {greeting.recipientName}
-            </h1>
-
-            <div className="surprise-divider mx-auto my-6 flex items-center justify-center gap-3" aria-hidden="true">
-              <span />
-              <strong>{visual.divider}</strong>
-              <span />
-            </div>
-
-            <p className="whitespace-pre-wrap text-lg leading-8 text-stone-700 sm:text-xl sm:leading-9">
-              {greeting.message}
-            </p>
-
-            {greeting.senderName && (
-              <p className="surprise-signature mt-7 text-lg text-stone-900">
-                With love, {greeting.senderName}
+              <p className="surprise-badge mx-auto mt-4 inline-flex rounded-full px-5 py-2 text-[0.68rem] font-bold uppercase tracking-[0.22em]">
+                {visual.label}
               </p>
-            )}
 
-            <p className="mt-8 text-[0.65rem] font-bold uppercase tracking-[0.24em] text-stone-400">
-              Frosted Whispers
-            </p>
+              <h1 className="surprise-salutation mt-7 text-4xl leading-tight sm:text-5xl">
+                Dearest {greeting.recipientName},
+              </h1>
+            </header>
+
+            <section className="surprise-letter-body mt-7" aria-label="Your surprise message">
+              <p className="surprise-message whitespace-pre-wrap text-lg leading-9 sm:text-xl sm:leading-10">
+                {greeting.message}
+              </p>
+            </section>
+
+            <footer className="surprise-letter-footer mt-9">
+              <div className="surprise-divider flex items-center justify-center gap-3" aria-hidden="true">
+                <span />
+                <strong>{visual.divider}</strong>
+                <span />
+              </div>
+
+              <p className="surprise-signature mt-7 text-xl">
+                {visual.closing}
+              </p>
+              <p className="surprise-sender mt-1 text-3xl sm:text-4xl">
+                {greeting.senderName || 'Frosted Whispers'}
+              </p>
+
+              {formatRevealDate(greeting.activatedAt) && (
+                <time
+                  className="mt-3 block text-sm font-medium tracking-wide opacity-65"
+                  dateTime={greeting.activatedAt}
+                >
+                  {formatRevealDate(greeting.activatedAt)}
+                </time>
+              )}
+
+              <p className="mt-8 text-center text-[0.62rem] font-bold uppercase tracking-[0.25em] opacity-45">
+                Frosted Whispers · Every cake carries a message
+              </p>
+            </footer>
           </article>
         </>
       )}

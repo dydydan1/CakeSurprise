@@ -8,6 +8,7 @@ const occasionVisuals = {
     colors: ['#FFF4C7', '#FF8B8B', '#BDE7F6'],
     primary: '#D95F6A',
     ink: '#3F2B2A',
+    closing: 'With warmest wishes,',
     particles: ['✦', '•', '✧', '•', '★', '✦'],
     divider: '✦'
   },
@@ -20,6 +21,7 @@ const occasionVisuals = {
     colors: ['#F9DCE5', '#DDD2F5', '#FFF7E8'],
     primary: '#8B6FB5',
     ink: '#3F324B',
+    closing: 'With all my love,',
     particles: ['♡', '✦', '♥', '✧', '♡', '✦'],
     divider: '♡'
   },
@@ -32,6 +34,7 @@ const occasionVisuals = {
     colors: ['#F3E4C3', '#C98D96', '#DCE8DA'],
     primary: '#9B5C66',
     ink: '#463331',
+    closing: 'With all my love,',
     particles: ['✦', '♡', '✧', '♡', '✦', '✧'],
     divider: '∞'
   },
@@ -44,6 +47,7 @@ const occasionVisuals = {
     colors: ['#FCE2E7', '#B76E79', '#F4E5C2'],
     primary: '#9C5362',
     ink: '#482E34',
+    closing: 'With love,',
     particles: ['♥', '♡', '♥', '♡', '✦', '♡'],
     divider: '♡'
   },
@@ -56,6 +60,7 @@ const occasionVisuals = {
     colors: ['#FFE4E8', '#E9707B', '#FFD8C7'],
     primary: '#B94653',
     ink: '#492B31',
+    closing: 'Yours, with love,',
     particles: ['♥', '♡', '♥', '✦', '♡', '♥'],
     divider: '♡'
   },
@@ -68,6 +73,7 @@ const occasionVisuals = {
     colors: ['#E9E0FF', '#CDEFE2', '#E8C66A'],
     primary: '#7863AD',
     ink: '#342F47',
+    closing: 'Cheering you on,',
     particles: ['★', '✦', '✧', '★', '✦', '✧'],
     divider: '★'
   },
@@ -80,6 +86,7 @@ const occasionVisuals = {
     colors: ['#FFE1D6', '#CDECF0', '#E3D9FA'],
     primary: '#B65E7A',
     ink: '#3D3040',
+    closing: 'With joyful wishes,',
     particles: ['✦', '★', '✧', '•', '★', '✦'],
     divider: '✦'
   },
@@ -92,6 +99,7 @@ const occasionVisuals = {
     colors: ['#EEF2FF', '#E8E2F3', '#F7E7D3'],
     primary: '#75658F',
     ink: '#383342',
+    closing: 'Made especially for you,',
     particles: ['✦', '✧', '•', '✦', '✧', '★'],
     divider: '✦'
   }
