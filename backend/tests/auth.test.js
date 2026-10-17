@@ -6,6 +6,7 @@ import request from 'supertest'
 import app from '../src/app.js'
 import { database } from '../src/config/database.js'
 import { env } from '../src/config/env.js'
+import { getSessionCookieOptions } from '../src/controllers/authController.js'
 
 const testEmail = `auth-test-${randomUUID()}@example.com`
 const testPassword = `Test-${randomUUID()}-password`
@@ -47,6 +48,8 @@ test('admin authentication lifecycle', async () => {
   assert.equal(loginResponse.status, 200)
   assert.equal(loginResponse.body.admin.email, testEmail)
   assert.match(loginResponse.headers['set-cookie'][0], /HttpOnly/)
+  assert.match(loginResponse.headers['set-cookie'][0], /SameSite=Lax/)
+  assert.doesNotMatch(loginResponse.headers['set-cookie'][0], /Secure/)
 
   const currentAdminResponse = await agent.get('/api/admin/auth/me')
 
@@ -58,4 +61,12 @@ test('admin authentication lifecycle', async () => {
 
   const signedOutResponse = await agent.get('/api/admin/auth/me')
   assert.equal(signedOutResponse.status, 401)
+})
+
+test('production session cookies support secure cross-site requests', () => {
+  const options = getSessionCookieOptions(new Date(), true)
+
+  assert.equal(options.httpOnly, true)
+  assert.equal(options.secure, true)
+  assert.equal(options.sameSite, 'none')
 })

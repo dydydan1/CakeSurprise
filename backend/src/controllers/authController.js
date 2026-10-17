@@ -6,10 +6,13 @@ import {
 } from '../services/authService.js'
 import { loginSchema } from '../validations/authValidation.js'
 
-const getSessionCookieOptions = (expiresAt) => ({
+export const getSessionCookieOptions = (
+  expiresAt,
+  isProduction = env.isProduction
+) => ({
   httpOnly: true,
-  secure: env.isProduction,
-  sameSite: 'lax',
+  secure: isProduction,
+  sameSite: isProduction ? 'none' : 'lax',
   expires: expiresAt,
   path: '/'
 })
