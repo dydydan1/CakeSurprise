@@ -11,7 +11,7 @@ test('QR download names normalize accents and special characters', () => {
 
   assert.equal(
     filename,
-    'frosted-whispers-birthday-mia-santos-42-print-card.png'
+    'crumbcoded-birthday-mia-santos-42-print-card.png'
   )
 })
 
@@ -23,7 +23,7 @@ test('QR download names stay short for very long recipient names', () => {
   }, 'print-card')
 
   assert.ok(filename.length <= 100)
-  assert.match(filename, /^frosted-whispers-anniversary-[a-z0-9-]+-987654321-print-card\.png$/)
+  assert.match(filename, /^crumbcoded-anniversary-[a-z0-9-]+-987654321-print-card\.png$/)
 })
 
 test('QR download names have a readable fallback for emoji-only names', () => {
@@ -35,6 +35,6 @@ test('QR download names have a readable fallback for emoji-only names', () => {
 
   assert.equal(
     filename,
-    'frosted-whispers-romantic-greeting-7-qr-only.png'
+    'crumbcoded-romantic-greeting-7-qr-only.png'
   )
 })

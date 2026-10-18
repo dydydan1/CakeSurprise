@@ -20,5 +20,5 @@ export const getQrDownloadName = (greeting, type) => {
     .slice(0, 12)
   const idSuffix = greetingId ? `-${greetingId}` : ''
 
-  return `frosted-whispers-${occasion}-${recipient}${idSuffix}-${downloadType}.png`
+  return `crumbcoded-${occasion}-${recipient}${idSuffix}-${downloadType}.png`
 }

@@ -146,8 +146,8 @@ export const createThemedQrCard = async ({ greeting, qrImageUrl, visual }) => {
 
   context.textAlign = 'center'
   context.fillStyle = visual.ink
-  context.font = '700 43px Arial, sans-serif'
-  context.fillText('FROSTED WHISPERS', CARD_WIDTH / 2, 335)
+  context.font = '700 52px Georgia, serif'
+  context.fillText('crumbcoded', CARD_WIDTH / 2, 335)
 
   context.fillStyle = visual.primary
   context.font = '700 27px Arial, sans-serif'
@@ -191,7 +191,7 @@ export const createThemedQrCard = async ({ greeting, qrImageUrl, visual }) => {
 
   context.fillStyle = '#78716C'
   context.font = 'italic 26px Georgia, serif'
-  context.fillText('Every cake carries a message.', CARD_WIDTH / 2, 1695)
+  context.fillText('Baked with Love, Coded for You.', CARD_WIDTH / 2, 1695)
 
   return canvas.toDataURL('image/png')
 }

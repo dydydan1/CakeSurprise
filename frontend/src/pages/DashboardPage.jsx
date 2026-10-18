@@ -162,19 +162,19 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
   }
 
   return (
-    <main className="min-h-screen bg-[#fffaf7] text-stone-900">
-      <header className="border-b border-rose-100 bg-white/90 backdrop-blur">
+    <main className="min-h-screen bg-[linear-gradient(180deg,_#F7EBDD_0%,_#FFFCFA_28%,_#F9F1ED_100%)] text-[#4B3435]">
+      <header className="border-b border-[#D49AA6]/30 bg-[#FFFCFA]/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5">
           <div>
             <BrandLockup showTagline />
-            <h1 className="sr-only">Greeting manager</h1>
+            <h1 className="sr-only">QR message manager</h1>
           </div>
           <div className="flex items-center gap-3">
-            <p className="hidden text-right text-sm text-stone-500 sm:block">
+            <p className="hidden text-right text-sm text-[#4B3435]/65 sm:block">
               {admin.displayName}
             </p>
             <button
-              className="rounded-xl border border-stone-300 px-4 py-2 text-sm font-semibold hover:bg-stone-100"
+              className="rounded-xl border border-[#D49AA6]/55 px-4 py-2 text-sm font-semibold text-[#722F43] transition hover:bg-[#F7EBDD]"
               onClick={onLogout}
               type="button"
             >
@@ -194,21 +194,21 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
             onSave={handleSaveGreeting}
           />
         ) : (
-          <section className="relative flex flex-col gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-[#ffe8e8] via-[#fff6dc] to-[#e8e3ff] p-6 text-stone-900 ring-1 ring-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
-            <div className="absolute -right-12 -top-16 size-44 rounded-full bg-white/50 blur-2xl" aria-hidden="true" />
+          <section className="relative flex flex-col gap-4 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#D49AA6] via-[#E6BBC4] to-[#F7EBDD] p-6 text-[#4B3435] shadow-[0_22px_60px_rgba(114,47,67,0.12)] ring-1 ring-white/70 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+            <div className="absolute -right-12 -top-16 size-44 rounded-full bg-white/45 blur-2xl" aria-hidden="true" />
             <div className="relative">
-              <p className="text-sm font-semibold text-[#b95670]">Customer greetings</p>
-              <h2 className="mt-2 text-2xl font-semibold">Create a memorable cake surprise</h2>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-stone-600">
-                Create a greeting, activate it, then download a QR code for the cake card or packaging.
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#722F43]">Personalized QR messages</p>
+              <h2 className="mt-2 text-2xl font-semibold">Create a message worth discovering</h2>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-[#4B3435]/75">
+                Write the message, choose an occasion theme, activate it, and generate a QR card ready to share or print.
               </p>
             </div>
             <button
-              className="relative shrink-0 rounded-xl bg-[#b95670] px-5 py-3 font-semibold text-white shadow-lg shadow-rose-200/70 hover:bg-[#9f4860]"
+              className="relative shrink-0 rounded-xl bg-[#722F43] px-5 py-3 font-semibold text-white shadow-lg shadow-[#722F43]/20 transition hover:bg-[#5F2638]"
               onClick={openNewGreetingForm}
               type="button"
             >
-              New greeting
+              New QR message
             </button>
           </section>
         )}
@@ -219,16 +219,16 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
           </p>
         )}
 
-        <section className="rounded-2xl bg-white p-4 ring-1 ring-stone-200">
+        <section className="rounded-2xl bg-[#FFFCFA] p-4 shadow-sm ring-1 ring-[#D49AA6]/30">
           <form className="grid gap-3 lg:grid-cols-[1fr_180px_180px_auto]" onSubmit={handleSearch}>
             <input
-              className="rounded-xl border border-stone-300 px-4 py-2.5 outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-100"
+              className="rounded-xl border border-[#D49AA6]/45 bg-white px-4 py-2.5 outline-none focus:border-[#722F43] focus:ring-4 focus:ring-[#D49AA6]/20"
               onChange={(event) => setSearchInput(event.target.value)}
-              placeholder="Search recipient, sender, or order reference"
+              placeholder="Search recipient or sender"
               value={searchInput}
             />
             <select
-              className="rounded-xl border border-stone-300 bg-white px-3 py-2.5"
+              className="rounded-xl border border-[#D49AA6]/45 bg-white px-3 py-2.5"
               name="status"
               onChange={handleFilterChange}
               value={filters.status}
@@ -239,7 +239,7 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
               ))}
             </select>
             <select
-              className="rounded-xl border border-stone-300 bg-white px-3 py-2.5"
+              className="rounded-xl border border-[#D49AA6]/45 bg-white px-3 py-2.5"
               name="occasion"
               onChange={handleFilterChange}
               value={filters.occasion}
@@ -250,7 +250,7 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
               ))}
             </select>
             <button
-              className="rounded-xl bg-[#b95670] px-5 py-2.5 font-semibold text-white hover:bg-[#9f4860]"
+              className="rounded-xl bg-[#722F43] px-5 py-2.5 font-semibold text-white transition hover:bg-[#5F2638]"
               type="submit"
             >
               Search
@@ -260,9 +260,9 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
 
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-semibold">Saved greetings</h2>
-            <p className="mt-1 text-sm text-stone-500">
-              {pagination.total} {pagination.total === 1 ? 'greeting' : 'greetings'}
+            <h2 className="text-xl font-semibold">QR messages</h2>
+            <p className="mt-1 text-sm text-[#4B3435]/60">
+              {pagination.total} {pagination.total === 1 ? 'message' : 'messages'}
             </p>
           </div>
         </div>
@@ -278,20 +278,20 @@ function DashboardPage({ admin, onLogout, onSessionExpired }) {
         />
 
         {pagination.totalPages > 1 && (
-          <nav className="flex items-center justify-center gap-3" aria-label="Greeting pages">
+          <nav className="flex items-center justify-center gap-3" aria-label="QR message pages">
             <button
-              className="rounded-lg border border-stone-300 px-4 py-2 text-sm font-medium disabled:opacity-40"
+              className="rounded-lg border border-[#D49AA6]/50 px-4 py-2 text-sm font-medium hover:bg-[#F7EBDD] disabled:opacity-40"
               disabled={pagination.page <= 1}
               onClick={() => changePage(pagination.page - 1)}
               type="button"
             >
               Previous
             </button>
-            <span className="text-sm text-stone-500">
+            <span className="text-sm text-[#4B3435]/60">
               Page {pagination.page} of {pagination.totalPages}
             </span>
             <button
-              className="rounded-lg border border-stone-300 px-4 py-2 text-sm font-medium disabled:opacity-40"
+              className="rounded-lg border border-[#D49AA6]/50 px-4 py-2 text-sm font-medium hover:bg-[#F7EBDD] disabled:opacity-40"
               disabled={pagination.page >= pagination.totalPages}
               onClick={() => changePage(pagination.page + 1)}
               type="button"

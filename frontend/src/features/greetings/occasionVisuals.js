@@ -96,9 +96,9 @@ const occasionVisuals = {
     teaser: 'A thoughtful surprise was prepared especially for this moment.',
     buttonLabel: 'Open my surprise',
     icon: 'gift',
-    colors: ['#EEF2FF', '#E8E2F3', '#F7E7D3'],
-    primary: '#75658F',
-    ink: '#383342',
+    colors: ['#F7EBDD', '#D49AA6', '#FCEFF1'],
+    primary: '#722F43',
+    ink: '#4B3435',
     closing: 'Made especially for you,',
     particles: ['✦', '✧', '•', '✦', '✧', '★'],
     divider: '✦'

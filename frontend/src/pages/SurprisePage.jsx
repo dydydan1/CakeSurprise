@@ -64,9 +64,9 @@ function SurprisePage() {
 
   if (isLoading) {
     return (
-      <main className="flex min-h-[100svh] items-center justify-center bg-[#fffaf7] p-6">
+      <main className="flex min-h-[100svh] items-center justify-center bg-[#F7EBDD] p-6">
         <div className="text-center">
-          <div className="mx-auto size-12 animate-pulse rounded-full bg-rose-200" />
+          <div className="mx-auto size-12 animate-pulse rounded-full bg-[#D49AA6]" />
           <p className="mt-4 text-sm font-medium text-stone-500">Preparing something special…</p>
         </div>
       </main>
@@ -75,12 +75,12 @@ function SurprisePage() {
 
   if (isUnavailable) {
     return (
-      <main className="flex min-h-[100svh] items-center justify-center bg-gradient-to-br from-rose-50 via-white to-violet-50 p-6 text-stone-900">
+      <main className="flex min-h-[100svh] items-center justify-center bg-gradient-to-br from-[#F7EBDD] via-white to-[#E8C5CC] p-6 text-[#4B3435]">
         <section className="w-full max-w-md rounded-[2rem] border border-white bg-white/90 p-8 text-center shadow-[0_25px_80px_rgba(120,90,100,0.14)] backdrop-blur">
-          <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-rose-50 text-2xl text-rose-500">?</div>
-          <h1 className="surprise-title mt-5 text-3xl">This surprise is unavailable</h1>
+          <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-[#F7EBDD] text-2xl text-[#722F43]">?</div>
+          <h1 className="surprise-title mt-5 text-3xl">This message is unavailable</h1>
           <p className="mt-3 text-sm leading-6 text-stone-600">
-            The link may have been disabled. Please ask the cake sender or bakery for help.
+            The QR link may have been disabled. Please ask the sender for a new message link.
           </p>
         </section>
       </main>
@@ -139,7 +139,7 @@ function SurprisePage() {
           </button>
 
           <p className="mt-6 text-[0.65rem] font-bold uppercase tracking-[0.24em] text-stone-400">
-            Frosted Whispers
+            crumbcoded
           </p>
         </section>
       ) : (
@@ -193,7 +193,7 @@ function SurprisePage() {
                 {visual.closing}
               </p>
               <p className="surprise-sender mt-1 text-3xl sm:text-4xl">
-                {greeting.senderName || 'Frosted Whispers'}
+                {greeting.senderName || 'Someone special'}
               </p>
 
               {formatRevealDate(greeting.activatedAt) && (
@@ -206,7 +206,7 @@ function SurprisePage() {
               )}
 
               <p className="mt-8 text-center text-[0.62rem] font-bold uppercase tracking-[0.25em] opacity-45">
-                Frosted Whispers · Every cake carries a message
+                crumbcoded · Baked with Love, Coded for You.
               </p>
             </footer>
           </article>

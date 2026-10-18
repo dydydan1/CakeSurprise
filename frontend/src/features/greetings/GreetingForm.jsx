@@ -15,8 +15,7 @@ const emptyGreeting = {
   message: '',
   occasion: 'birthday',
   theme: 'birthday',
-  status: 'draft',
-  orderReference: ''
+  status: 'draft'
 }
 
 const getAvailableStatusOptions = (canArchive, currentStatus) => {
@@ -46,8 +45,7 @@ function GreetingForm({ canArchive, greeting, isSaving, onCancel, onSave }) {
       message: greeting.message,
       occasion: greeting.occasion,
       theme: greeting.theme,
-      status: greeting.status,
-      orderReference: greeting.orderReference || ''
+      status: greeting.status
     })
   }, [greeting])
 
@@ -65,7 +63,7 @@ function GreetingForm({ canArchive, greeting, isSaving, onCancel, onSave }) {
     onSave(formValues)
   }
 
-  const inputClassName = 'mt-2 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none transition focus:border-rose-500 focus:ring-4 focus:ring-rose-100'
+  const inputClassName = 'mt-2 w-full rounded-xl border border-[#D49AA6]/50 bg-white px-4 py-3 outline-none transition focus:border-[#722F43] focus:ring-4 focus:ring-[#D49AA6]/20'
   const occasionVisual = getOccasionVisual(formValues.occasion)
   const availableStatusOptions = getAvailableStatusOptions(
     canArchive,
@@ -73,14 +71,14 @@ function GreetingForm({ canArchive, greeting, isSaving, onCancel, onSave }) {
   )
 
   return (
-    <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-stone-200 sm:p-8">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-rose-600">
-            {greeting ? 'Edit greeting' : 'New greeting'}
+    <section className="rounded-[2rem] bg-[#FFFCFA] p-6 shadow-[0_20px_55px_rgba(114,47,67,0.1)] ring-1 ring-[#D49AA6]/30 sm:p-8">
+      <div className="relative flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div className="pr-16">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#D49AA6]">
+            {greeting ? 'Edit QR message' : 'New QR message'}
           </p>
           <h2 className="mt-2 text-2xl font-semibold">
-            {greeting ? `For ${greeting.recipientName}` : 'Create a customer greeting'}
+            {greeting ? `For ${greeting.recipientName}` : 'Create a personalized message'}
           </h2>
         </div>
 
@@ -92,7 +90,7 @@ function GreetingForm({ canArchive, greeting, isSaving, onCancel, onSave }) {
         >
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone-500">
-              Recipient palette
+              Message palette
             </p>
             <p className="mt-1 font-semibold text-stone-800">{occasionVisual.label}</p>
           </div>
@@ -107,7 +105,7 @@ function GreetingForm({ canArchive, greeting, isSaving, onCancel, onSave }) {
           </div>
         </div>
         <button
-          className="rounded-lg px-3 py-2 text-sm font-medium text-stone-500 hover:bg-stone-100"
+          className="absolute right-0 top-0 rounded-lg px-3 py-2 text-sm font-medium text-[#4B3435]/65 hover:bg-[#F7EBDD]"
           onClick={onCancel}
           type="button"
         >
@@ -182,22 +180,11 @@ function GreetingForm({ canArchive, greeting, isSaving, onCancel, onSave }) {
             </select>
           </label>
 
-          <label className="block">
-            <span className="text-sm font-medium text-stone-700">Order reference</span>
-            <input
-              className={inputClassName}
-              maxLength="80"
-              name="orderReference"
-              onChange={updateField}
-              placeholder="e.g. ORDER-1042"
-              value={formValues.orderReference}
-            />
-          </label>
         </div>
 
         <label className="block">
           <span className="flex items-center justify-between gap-4 text-sm font-medium text-stone-700">
-            <span>Greeting message *</span>
+            <span>Personal message *</span>
             <span className="font-normal text-stone-400">{formValues.message.length}/1000</span>
           </span>
           <textarea
@@ -212,18 +199,18 @@ function GreetingForm({ canArchive, greeting, isSaving, onCancel, onSave }) {
 
         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <button
-            className="rounded-xl border border-stone-300 px-5 py-3 font-semibold text-stone-700 hover:bg-stone-50"
+            className="rounded-xl border border-[#D49AA6]/55 px-5 py-3 font-semibold text-[#4B3435] hover:bg-[#F7EBDD]"
             onClick={onCancel}
             type="button"
           >
             Cancel
           </button>
           <button
-            className="rounded-xl bg-[#b95670] px-5 py-3 font-semibold text-white hover:bg-[#9f4860] disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-xl bg-[#722F43] px-5 py-3 font-semibold text-white hover:bg-[#5F2638] disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isSaving}
             type="submit"
           >
-            {isSaving ? 'Saving…' : greeting ? 'Save changes' : 'Create greeting'}
+            {isSaving ? 'Saving…' : greeting ? 'Save changes' : 'Create QR message'}
           </button>
         </div>
       </form>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">crumbcoded QR message mark</title>
+  <rect width="64" height="64" rx="18" fill="#F7EBDD"/>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="none" stroke="#D49AA6" stroke-width="3"/>
+  <path d="M15 18h11v11H15zM38 18h11v11H38zM15 41h11v8H15z" fill="none" stroke="#722F43" stroke-width="4"/>
+  <path d="M33 39c-5-4-11 3-6 8l6 5 6-5c5-5-1-12-6-8Z" fill="#D49AA6" stroke="#722F43" stroke-linejoin="round" stroke-width="2"/>
+  <path d="M40 36h4v4h-4zM47 36h4v8h-4zM40 47h4v4h-4z" fill="#722F43"/>
+  <circle cx="20.5" cy="23.5" r="2.5" fill="#D49AA6"/>
+  <circle cx="43.5" cy="23.5" r="2.5" fill="#D49AA6"/>
+</svg>

@@ -63,23 +63,23 @@ function QrCodePanel({ greeting, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#4B3435]/65 p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="qr-panel-title"
     >
-      <section className="max-h-[calc(100vh-2rem)] w-full max-w-lg overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
+      <section className="max-h-[calc(100vh-2rem)] w-full max-w-lg overflow-y-auto rounded-[2rem] bg-[#FFFCFA] p-6 shadow-2xl ring-1 ring-[#D49AA6]/35 sm:p-8">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-600">
-              Ready to print
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D49AA6]">
+              QR message ready
             </p>
             <h2 className="mt-2 text-2xl font-semibold" id="qr-panel-title">
               QR for {greeting.recipientName}
             </h2>
           </div>
           <button
-            className="rounded-lg border border-stone-300 px-3 py-2 text-sm font-medium hover:bg-stone-50"
+            className="rounded-lg border border-[#D49AA6]/55 px-3 py-2 text-sm font-medium hover:bg-[#F7EBDD]"
             onClick={onClose}
             type="button"
           >
@@ -88,7 +88,7 @@ function QrCodePanel({ greeting, onClose }) {
         </div>
 
         <div
-          className="mx-auto mt-6 max-w-56 rounded-3xl p-3 shadow-sm ring-1 ring-stone-200"
+          className="mx-auto mt-6 max-w-56 rounded-3xl p-3 shadow-sm ring-1 ring-[#D49AA6]/35"
           style={{ backgroundColor: visual.colors[0] }}
         >
           {qrCardUrl ? (
@@ -114,23 +114,23 @@ function QrCodePanel({ greeting, onClose }) {
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
           <button
-            className="rounded-xl border border-stone-300 px-4 py-3 text-sm font-semibold hover:bg-stone-50"
+            className="rounded-xl border border-[#D49AA6]/50 px-4 py-3 text-sm font-semibold hover:bg-[#F7EBDD]"
             onClick={copyPublicLink}
             type="button"
           >
             {isCopied ? 'Link copied' : 'Copy link'}
           </button>
           <a
-            className="rounded-xl border border-stone-300 px-4 py-3 text-center text-sm font-semibold hover:bg-stone-50"
+            className="rounded-xl border border-[#D49AA6]/50 px-4 py-3 text-center text-sm font-semibold hover:bg-[#F7EBDD]"
             href={publicUrl}
             rel="noreferrer"
             target="_blank"
           >
-            Preview surprise
+            Preview message
           </a>
           {qrImageUrl && (
             <a
-              className="rounded-xl border border-stone-300 px-4 py-3 text-center text-sm font-semibold hover:bg-stone-50"
+              className="rounded-xl border border-[#D49AA6]/50 px-4 py-3 text-center text-sm font-semibold hover:bg-[#F7EBDD]"
               download={getQrDownloadName(greeting, 'qr-only')}
               href={qrImageUrl}
             >
@@ -139,17 +139,16 @@ function QrCodePanel({ greeting, onClose }) {
           )}
           {qrCardUrl && (
             <a
-              className="rounded-xl px-4 py-3 text-center text-sm font-semibold text-white shadow-sm sm:col-span-2"
+              className="rounded-xl bg-[#722F43] px-4 py-3 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-[#5F2638] sm:col-span-2"
               download={getQrDownloadName(greeting, 'print-card')}
               href={qrCardUrl}
-              style={{ backgroundColor: visual.primary }}
             >
               Download themed print card
             </a>
           )}
         </div>
 
-        <p className="mt-4 break-all rounded-xl bg-stone-50 px-4 py-3 text-xs text-stone-500">
+        <p className="mt-4 break-all rounded-xl bg-[#F7EBDD]/65 px-4 py-3 text-xs text-[#4B3435]/60">
           {publicUrl}
         </p>
       </section>
